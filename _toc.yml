@@ -7,5 +7,5 @@ root: index
 parts:
 - caption: "Early Warning Data store"
   chapters:
-  - file: chapters/Fire_Reanalysis
+  - file: notebooks/Fire_reanalysis
     title: "Fire Reanalysis"
