@@ -26,12 +26,12 @@ Traceback (most recent call last):
     error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
   File "/opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/nbclient/client.py", line 856, in _async_handle_timeout
     raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 500 seconds.
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# If you are using the pre-downloaded data then please set DOWNLOAD_FROM_CDS to False', '# and set the LOCAL_DATA_DIR to where you stored the data.', '', '# This is the new method of downloading but it does not yet support the EWDS, keeping it here for when its ready...', 'DOWNLOAD_FROM_CDS = False']
+['import pandas as pd', 'import xarray as xr', 'from datetime import datetime,timedelta', 'start_date=datetime.strptime(str(xfwi_data.date)+\'12\',"%Y%m%d%H")', 'end_date=start_date+timedelta(days=len(steps)-1)']
 ...
-['    }', '', '    client = cdsapi.Client(**cdsapi_kwargs)', '    client.retrieve(dataset, request, f"{LOCAL_DATA_DIR}/fwinx.grib")', '    fwi_data = ek.data.from_source("file", f"{LOCAL_DATA_DIR}/fwinx.grib")']
+['# del xfwi_data', 'xfwi_data2.coords["valid_time"] = (', '    xfwi_data2["time"] + xfwi_data2["step"]', ')', 'xfwi_data2']
 -------------------
 
