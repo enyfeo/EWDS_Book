@@ -9,6 +9,7 @@ author: Christopher Barnard
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
+  timeout: 500
 
 # Define the name of the latex output file for PDF builds
 latex:

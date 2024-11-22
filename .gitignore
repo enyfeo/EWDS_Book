@@ -5,8 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
+*.grib
 
 # Distribution / packaging
+.venv
 .Python
 build/
 develop-eggs/
@@ -164,5 +166,6 @@ cython_debug/
 data/*
 archive/*
 handbook/_build/*
+handbook/data/*
 .jupyter_ystore.db
 *.zip
