@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introducing earthkit &#8212; Early Warning Datastore Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Fire_reanalysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introducing Fire Reanalysis using Earthkit" href="Fire_seasonal.html" />
+    <link rel="prev" title="Early Warning Datastore" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Early Warning Datastore Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Early Warning Datastore
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fire Reanalysis</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introducing earthkit</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fire Seasonal</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Fire_seasonal.html">Introducing Fire Reanalysis using Earthkit</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Fire_seasonal_nuts.html">Introducing Fire Reanalysis using Earthkit</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FFire_reanalysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Fire_reanalysis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introducing earthkit</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-data-from-the-ewds">Retrieving data from the EWDS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-visualisation-with-earthkit-maps">Quick visualisation with <strong>earthkit-maps</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="introducing-earthkit">
+<h1>Introducing earthkit<a class="headerlink" href="#introducing-earthkit" title="Link to this heading">#</a></h1>
+<p><strong>earthkit</strong> is an <strong>open-source</strong> Python project led by ECMWF, providing powerful tools for speeding up weather and climate science workflows by simplifying <strong>data access</strong>, <strong>processing</strong>, <strong>analysis</strong>, <strong>visualisation</strong> and more.</p>
+<p><strong>earthkit</strong> lowers the barrier to entry for interacting with climate data in Python by providing high-level, easy-to-use functions for performing common data analysis and visualisation tasks. Designed to be <strong>format-agnostic</strong>, <strong>earthkit</strong> allows you to focus on working with whatever data you have without worrying about technical issues like data formats.</p>
+<p><strong>earthkit</strong> is currently in the <em>alpha</em> stage of development, but is already available in GitHub, PyPI and conda as an open-source project than can be installed, played with and contributed to. <strong>earthkit</strong> will become the recommended library for retrieving, analysing and visualising CDS, ADS and EWDS data when it releases in 2024, replacing the legacy <em>CDS Toolbox</em>.</p>
+<p>These notebooks provide an introduction to using earthkit as a one-stop-shop for speeding up your workflows for interacting with CDS data.</p>
+<p>To get started, import the <code class="docutils literal notranslate"><span class="pre">earthkit</span></code> module.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">earthkit</span> <span class="k">as</span> <span class="nn">ek</span>
+<span class="kn">import</span> <span class="nn">earthkit.maps</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="retrieving-data-from-the-ewds">
+<h2>Retrieving data from the EWDS<a class="headerlink" href="#retrieving-data-from-the-ewds" title="Link to this heading">#</a></h2>
+<p>The core function we will be using for retrieving and opening data is <code class="docutils literal notranslate"><span class="pre">ek.data.from_source</span></code>. You can use this function to open data from many different sources, such as URLs, local files, and of course the EWDS.</p>
+<p>To access data from the EWDS source, we need to pass <code class="docutils literal notranslate"><span class="pre">&quot;ewds&quot;</span></code> as the first argument to <code class="docutils literal notranslate"><span class="pre">ek.data.from_source</span></code>. The other arguments are exactly the same arguments expected by the CDS API - that is, the name of the dataset followed by the request payload. If you’re familiar with the <strong>CDS API</strong>, you’ll already be acquainted with the syntax for these requests.</p>
+<p>In the following example, we will retrieve data from the EWDS dataset <a class="reference external" href="https://ewds.climate.copernicus.eu/datasets/cems-fire-historical-v1">Fire danger indices historical data from the Copernicus Emergency Management Service</a>. We will access Fire weather index for 20240731</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If you are using the pre-downloaded data then please set DOWNLOAD_FROM_CDS to False</span>
+<span class="c1"># and set the LOCAL_DATA_DIR to where you stored the data.</span>
+
+<span class="c1"># This is the new method of downloading but it does not yet support the EWDS, keeping it here for when its ready...</span>
+<span class="n">DOWNLOAD_FROM_CDS</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">LOCAL_DATA_DIR</span> <span class="o">=</span> <span class="s2">&quot;data/&quot;</span>
+<span class="n">TARGET</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">LOCAL_DATA_DIR</span><span class="si">}</span><span class="s2">/fwinx_reanalysis.grib&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">LOCAL_DATA_DIR</span><span class="p">,</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">fwi_data</span> <span class="o">=</span> <span class="n">ek</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span>
+    <span class="s2">&quot;cds&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cems-fire-historical-v1&quot;</span><span class="p">,</span>
+    <span class="n">variable</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fire_weather_index&quot;</span><span class="p">],</span>
+    <span class="n">dataset_type</span><span class="o">=</span> <span class="s2">&quot;consolidated_dataset&quot;</span><span class="p">,</span>
+    <span class="n">system_version</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;4_1&quot;</span><span class="p">],</span>
+    <span class="n">year</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2024&quot;</span><span class="p">],</span>
+    <span class="n">month</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;07&quot;</span><span class="p">],</span>
+    <span class="n">day</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;31&quot;</span><span class="p">],</span>
+    <span class="n">grid</span><span class="o">=</span> <span class="s2">&quot;0.25/0.25&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:25,696 WARNING [2024-11-19T00:00:00] Issue with underlaying infrastructure is now solved. System should gradually recover. Please check updated status [here](https://status.ecmwf.int/)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:25,696 INFO [2024-09-26T00:00:00] Welcome to the New [CEMS](https://emergency.copernicus.eu/) [Early Warning Data Store (EWDS)](https://ewds-beta.climate.copernicus.eu/)! This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your [feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new EWDS for the benefit of everyone. Thank you.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:25,697 INFO [2024-09-26T00:00:00] Watch our [Forum]( https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:25,997 WARNING [2024-11-19T00:00:00] Issue with underlaying infrastructure is now solved. System should gradually recover. Please check updated status [here](https://status.ecmwf.int/)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:25,998 INFO [2024-09-26T00:00:00] Welcome to the New [CEMS](https://emergency.copernicus.eu/) [Early Warning Data Store (EWDS)](https://ewds-beta.climate.copernicus.eu/)! This new system is in its early days of full operations and still undergoing enhancements and fine tuning. Some disruptions are to be expected. Your [feedback](https://jira.ecmwf.int/plugins/servlet/desk/portal/1/create/202) is key to improve the user experience on the new EWDS for the benefit of everyone. Thank you.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:25,999 INFO [2024-09-26T00:00:00] Watch our [Forum]( https://forum.ecmwf.int/) for Announcements, news and other discussed topics.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:26,420 WARNING [2023-12-12T13:00:00] This is a CEMS dataset!
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:26,421 INFO Request ID is b4de2a08-55d0-4454-b6bd-26261543c6f1
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-11-21 14:30:26,480 INFO status has been updated to accepted
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">TARGET</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">LOCAL_DATA_DIR</span><span class="si">}</span><span class="s2">/fwinx_reanalysis.grib&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">LOCAL_DATA_DIR</span><span class="p">,</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">fwi_data</span> <span class="o">=</span> <span class="n">ek</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="s2">&quot;cds&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="s2">&quot;cems-fire-historical-v1&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">variable</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fire_weather_index&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">dataset_type</span><span class="o">=</span> <span class="s2">&quot;consolidated_dataset&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">system_version</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;4_1&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">year</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2024&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">month</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;07&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">day</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;31&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">grid</span><span class="o">=</span> <span class="s2">&quot;0.25/0.25&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="p">)</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/__init__.py:150,</span> in <span class="ni">from_source</span><span class="nt">(name, lazily, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="k">return</span> <span class="n">from_source_lazily</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">--&gt; </span><span class="mi">150</span> <span class="n">src</span> <span class="o">=</span> <span class="n">get_source</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span> <span class="k">while</span> <span class="n">src</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">prev</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span>     <span class="n">prev</span> <span class="o">=</span> <span class="n">src</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/__init__.py:131,</span> in <span class="ni">SourceMaker.__call__</span><span class="nt">(self, name, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="n">klass</span> <span class="o">=</span> <span class="n">find_plugin</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">name</span><span class="p">,</span> <span class="n">loader</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">129</span>     <span class="bp">self</span><span class="o">.</span><span class="n">SOURCES</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">klass</span>
+<span class="ne">--&gt; </span><span class="mi">131</span> <span class="n">source</span> <span class="o">=</span> <span class="n">klass</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>     <span class="n">source</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/core/__init__.py:22,</span> in <span class="ni">MetaBase.__call__</span><span class="nt">(cls, *args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="n">obj</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="k">return</span> <span class="n">obj</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/cds.py:126,</span> in <span class="ni">CdsRetriever.__init__</span><span class="nt">(self, dataset, prompt, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="n">nthreads</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="s2">&quot;number-of-download-threads&quot;</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span> <span class="k">if</span> <span class="n">nthreads</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">126</span>     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="k">with</span> <span class="n">SoftThreadPool</span><span class="p">(</span><span class="n">nthreads</span><span class="o">=</span><span class="n">nthreads</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/cds.py:126,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="n">nthreads</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="s2">&quot;number-of-download-threads&quot;</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">requests</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span> <span class="k">if</span> <span class="n">nthreads</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">126</span>     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_retrieve</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">requests</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="k">with</span> <span class="n">SoftThreadPool</span><span class="p">(</span><span class="n">nthreads</span><span class="o">=</span><span class="n">nthreads</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/cds.py:140,</span> in <span class="ni">CdsRetriever._retrieve</span><span class="nt">(self, dataset, request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span>     <span class="bp">self</span><span class="o">.</span><span class="n">source_filename</span> <span class="o">=</span> <span class="n">cds_result</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="n">cds_result</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">140</span> <span class="n">return_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_file</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">141</span>     <span class="n">retrieve</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">142</span>     <span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">request</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span>     <span class="n">extension</span><span class="o">=</span><span class="n">EXTENSIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format&quot;</span><span class="p">),</span> <span class="s2">&quot;.cache&quot;</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">144</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">145</span> <span class="k">return</span> <span class="n">return_object</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/__init__.py:68,</span> in <span class="ni">Source.cache_file</span><span class="nt">(self, create, args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span> <span class="k">if</span> <span class="n">owner</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">66</span>     <span class="n">owner</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?!^)([A-Z]+)&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;-\1&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="ne">---&gt; </span><span class="mi">68</span> <span class="k">return</span> <span class="n">cache_file</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">create</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/core/caching.py:1053,</span> in <span class="ni">cache_file</span><span class="nt">(owner, create, args, hash_extra, extension, force, replace)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1051</span> <span class="k">with</span> <span class="n">FileLock</span><span class="p">(</span><span class="n">lock</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1052</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>  <span class="c1"># Check again, another thread/process may have created the file</span>
+<span class="ne">-&gt; </span><span class="mi">1053</span>         <span class="n">owner_data</span> <span class="o">=</span> <span class="n">create</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.tmp&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1054</span>         <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.tmp&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1055</span> <span class="k">try</span><span class="p">:</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/earthkit/data/sources/cds.py:136,</span> in <span class="ni">CdsRetriever._retrieve.&lt;locals&gt;.retrieve</span><span class="nt">(target, args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span> <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">136</span>     <span class="n">cds_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">()</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span>     <span class="bp">self</span><span class="o">.</span><span class="n">source_filename</span> <span class="o">=</span> <span class="n">cds_result</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="n">cds_result</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/cads_api_client/legacy_api_client.py:152,</span> in <span class="ni">LegacyApiClient.retrieve</span><span class="nt">(self, name, request, target)</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span> <span class="n">submitted</span><span class="p">:</span> <span class="n">Remote</span> <span class="o">|</span> <span class="n">Results</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wait_until_complete</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">152</span>     <span class="n">submitted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">submit_and_wait_on_results</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span>         <span class="n">collection_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span>         <span class="o">**</span><span class="n">request</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span>     <span class="n">submitted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>         <span class="n">collection_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">159</span>         <span class="o">**</span><span class="n">request</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">160</span>     <span class="p">)</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/cads_api_client/api_client.py:456,</span> in <span class="ni">ApiClient.submit_and_wait_on_results</span><span class="nt">(self, collection_id, **request)</span>
+<span class="g g-Whitespace">    </span><span class="mi">440</span> <span class="k">def</span> <span class="nf">submit_and_wait_on_results</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">441</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">collection_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span><span class="p">:</span> <span class="n">Any</span>
+<span class="g g-Whitespace">    </span><span class="mi">442</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">cads_api_client</span><span class="o">.</span><span class="n">Results</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">443</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Submit a request and wait for the results to be ready.</span>
+<span class="g g-Whitespace">    </span><span class="mi">444</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">445</span><span class="sd">     Parameters</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">454</span><span class="sd">     cads_api_client.Results</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">456</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_api</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">collection_id</span><span class="p">,</span> <span class="o">**</span><span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">make_results</span><span class="p">()</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/cads_api_client/processing.py:525,</span> in <span class="ni">Remote.make_results</span><span class="nt">(self, wait)</span>
+<span class="g g-Whitespace">    </span><span class="mi">523</span> <span class="k">def</span> <span class="nf">make_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wait</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Results</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">524</span>     <span class="k">if</span> <span class="n">wait</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">525</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_wait_on_results</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">526</span>     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_api_response</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">527</span>     <span class="k">try</span><span class="p">:</span>
+
+<span class="nn">File /opt/homebrew/Caskroom/miniconda/base/envs/earthkit/lib/python3.10/site-packages/cads_api_client/processing.py:521,</span> in <span class="ni">Remote._wait_on_results</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">519</span>     <span class="k">raise</span> <span class="n">ProcessingFailedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown API state </span><span class="si">{</span><span class="n">status</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">520</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;results not ready, waiting for </span><span class="si">{</span><span class="n">sleep</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">521</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<p>One advantage of <strong>earthkit</strong> over the legacy CDS API is that local downloads and caching are automatically handled for you. That means that you don’t need to save your request to a specific file and then read that file into Python - it’s all handled in one step. By default, files will be removed from your local cache after a few days - so you don’t even need to worry about cleaning up files you no longer need, as they will be automatically housekept!</p>
+<p>Note that we didn’t include a <code class="docutils literal notranslate"><span class="pre">format</span></code> key in our request payload, even though cems-fire-historical can be retrieved in either GRIB or netCDF format. <strong>earthkit</strong> is designed to be <strong>format agnostic</strong> - that is, earthkit tools should work in exactly the same way whether you have GRIB data <em>or</em> netCDF data, so we can comfortably exclude the data format from our request and accept the default selection made by the CDS.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">data</span></code> object that has been returned from our CDS request is a special kind of <strong>earthkit</strong> object, providing a range of convenient methods for interrogating a data source or converting it to a format that’s familiar to you, such as xarray, numpy or pandas - or saving to a local file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert to an xarray Dataset object</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FWI DATA in Xarray&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fwi_data</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="c1"># Convert to an numpy</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FWI DATA in Numpy&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fwi_data</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Convert to a pandas dataframe</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FWI DATA in Pandas&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fwi_data</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FWI DATA in Xarray
+&lt;xarray.Dataset&gt; Size: 8MB
+Dimensions:    (latitude: 721, longitude: 1440)
+Coordinates:
+  * latitude   (latitude) float64 6kB 90.0 89.75 89.5 ... -89.5 -89.75 -90.0
+  * longitude  (longitude) float64 12kB 0.0 0.25 0.5 0.75 ... 359.2 359.5 359.8
+Data variables:
+    fwinx      (latitude, longitude) float64 8MB ...
+Attributes:
+    param:        fwinx
+    class:        gw
+    stream:       oper
+    levtype:      sfc
+    type:         fc
+    expver:       0001
+    date:         20240731
+    time:         0
+    origin:       ecmf_ea
+    domain:       g
+    Conventions:  CF-1.8
+    institution:  ECMWF
+FWI DATA in Numpy
+[[[nan nan nan ... nan nan nan]
+  [nan nan nan ... nan nan nan]
+  [nan nan nan ... nan nan nan]
+  ...
+  [nan nan nan ... nan nan nan]
+  [nan nan nan ... nan nan nan]
+  [nan nan nan ... nan nan nan]]]
+FWI DATA in Pandas
+    lat   lon  value datetime domain expver class type stream model   origin  \
+0  90.0  0.00    NaN     None      g   0001    gw   fc   oper  geff  ecmf_ea   
+1  90.0  0.25    NaN     None      g   0001    gw   fc   oper  geff  ecmf_ea   
+2  90.0  0.50    NaN     None      g   0001    gw   fc   oper  geff  ecmf_ea   
+3  90.0  0.75    NaN     None      g   0001    gw   fc   oper  geff  ecmf_ea   
+4  90.0  1.00    NaN     None      g   0001    gw   fc   oper  geff  ecmf_ea   
+
+  levtype      date  time  step  param  
+0     sfc  20240731     0    12  fwinx  
+1     sfc  20240731     0    12  fwinx  
+2     sfc  20240731     0    12  fwinx  
+3     sfc  20240731     0    12  fwinx  
+4     sfc  20240731     0    12  fwinx  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="quick-visualisation-with-earthkit-maps">
+<h2>Quick visualisation with <strong>earthkit-maps</strong><a class="headerlink" href="#quick-visualisation-with-earthkit-maps" title="Link to this heading">#</a></h2>
+<p>So far we have have been making use of <strong>earthkit-data</strong> (<code class="docutils literal notranslate"><span class="pre">ek.data</span></code>) - one of many sub-components of <strong>earthkit</strong> - designed for accessing and reading data from a variety of sources.</p>
+<p>Now we can make use of <strong>earthkit</strong>’s geospatial visualisation component: <strong>earthkit-maps</strong> (<code class="docutils literal notranslate"><span class="pre">ek.maps</span></code>). <strong>earthkit-maps</strong> offers convenient methods for very quickly producing high-quality graphics from geospatial data, while also providing the flexibility to tailor visualisations to specific needs.</p>
+<p>The fastest way to get started with <strong>earthkit-maps</strong> is to use the <code class="docutils literal notranslate"><span class="pre">ek.maps.quickplot</span></code> function to provide a quick look at the data we just downloaded from the CDS. With <code class="docutils literal notranslate"><span class="pre">quickplot</span></code>, the colour scale, data units, title and map projection will be automatically detected from the metadata of the data we are plotting, so we don’t need to provide anything more than the data we would like to visualise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chart</span> <span class="o">=</span> <span class="n">ek</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;europe&quot;</span><span class="p">)</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fwi_data</span><span class="p">)</span>   
+
+<span class="n">chart</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">borders</span><span class="p">()</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">gridlines</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;cartopy.mpl.gridliner.Gridliner at 0x16bdc78b0&gt;]
+</pre></div>
+</div>
+<img alt="_images/dc256bb4c778d020298027243486d41655453628d740a0f5fcb6f4d11fa7c168.png" src="_images/dc256bb4c778d020298027243486d41655453628d740a0f5fcb6f4d11fa7c168.png" />
+</div>
+</div>
+<p>This is a great way to take a quick look at the data, but what if we want to tailor the visualisation to more specific needs?</p>
+<p>Let’s say we would like to visualise the same data:</p>
+<ul class="simple">
+<li><p>over a European domain</p></li>
+<li><p>with units of <em>degrees celsius</em> instead of <em>Kelvin</em></p></li>
+<li><p>with a more informative title</p></li>
+</ul>
+<p><strong>earthkit-maps</strong> provides plenty of freedom to customise our plot, with a simple API filled with convenient templates. Instead of using the <code class="docutils literal notranslate"><span class="pre">ek.maps.quickplot</span></code> method, we need to create an <code class="docutils literal notranslate"><span class="pre">ek.maps.Superplot</span></code> object, which is the canvas onto which we will plot our data. The other steps in our visualisation are explained in in-line comments in the code cell below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instantiate a Superplot object with the domain set to &quot;Europe&quot;</span>
+<span class="c1"># earthkit-maps allows named domains based on many presets, including</span>
+<span class="c1"># continents, countries and more - so feel free to experiment with domains!</span>
+
+<span class="n">chart</span> <span class="o">=</span> <span class="n">ek</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="s2">&quot;Europe&quot;</span><span class="p">)</span>
+
+<span class="n">gust_style</span> <span class="o">=</span> <span class="n">earthkit</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">Style</span><span class="p">(</span>
+    <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;#486d19&quot;</span><span class="p">,</span><span class="s2">&quot;#30a053&quot;</span><span class="p">,</span><span class="s2">&quot;#aedd78&quot;</span><span class="p">,</span><span class="s2">&quot;#e4f4ac&quot;</span><span class="p">,</span><span class="s2">&quot;#ffff84&quot;</span><span class="p">,</span><span class="s2">&quot;#fdce8c&quot;</span><span class="p">,</span><span class="s2">&quot;#f1895b&quot;</span><span class="p">,</span><span class="s2">&quot;#e65b47&quot;</span><span class="p">,</span><span class="s2">&quot;#db2f32&quot;</span><span class="p">,</span><span class="s2">&quot;#bf5922&quot;</span><span class="p">,</span><span class="s2">&quot;#723f31&quot;</span><span class="p">],</span>
+    <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>  <span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># chart.plot will attempt to find a suitable style for the data based</span>
+<span class="c1"># on its metadata - usually the name of the variable we&#39;re plotting.</span>
+<span class="c1"># We can also specifically tailor the style to use some units of choice,</span>
+<span class="c1"># in this case celsius - but this depends on a corresponding pre-configured</span>
+<span class="c1">#style existing within earthkit-maps.</span>
+<span class="c1"># In the next notebook we will explore how to create custom styles.</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fwi_data</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">gust_style</span><span class="p">)</span>
+
+<span class="c1"># The API for adding auxilliary layers is very straightforward</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">borders</span><span class="p">()</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">gridlines</span><span class="p">()</span>
+
+<span class="c1"># Titles can include template keys between curely brackets, which are</span>
+<span class="c1"># extracted from the data&#39;s metadata. This makes it much easier to transfer</span>
+<span class="c1"># code between projects, without having to completely re-write titles</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{variable_name}</span><span class="s2"> in </span><span class="si">{domain}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">chart</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+<span class="n">chart</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6a928f9833544c6cbaa82b58f9373c54bccc6e59cb8bbb57ad4f3a09e1e5e2f3.png" src="_images/6a928f9833544c6cbaa82b58f9373c54bccc6e59cb8bbb57ad4f3a09e1e5e2f3.png" />
+</div>
+</div>
+<p>Now try experimenting with the cell above by changing the domain and units. Notice that the title and legend automatically update to reflect your choices!</p>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>In this notebook we have learnt how to retrieve data from the CDS and produce simple visualisations with <strong>earthkit</strong>. In the next example, we will learn how to further customise <strong>earthkit-maps</strong> visualisations on a few different kinds of datasets.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Early Warning Datastore</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Fire_seasonal.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introducing Fire Reanalysis using Earthkit</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-data-from-the-ewds">Retrieving data from the EWDS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-visualisation-with-earthkit-maps">Quick visualisation with <strong>earthkit-maps</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christopher Barnard
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
