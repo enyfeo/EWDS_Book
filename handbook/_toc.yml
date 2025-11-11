@@ -8,6 +8,7 @@ parts:
 - caption: "Fire Reanalysis"
   chapters:
   - file: Fire_reanalysis
+  - file: fwi_climate_stripes
 - caption: "Fire Seasonal"
   chapters:
   - file: Fire_seasonal
